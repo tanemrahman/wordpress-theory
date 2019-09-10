@@ -44,6 +44,22 @@ get_post_meta(get_the_ID, "_alpha_camera_model", true);
 })(jQuery);
 ```
 
+নিচের ফাংশন টি functions.php ফাইল এ যোগ করতে হবে।
+
+```php
+function romereo_admin_assets($hook) {
+	 if ( isset( $_REQUEST['post'] ) || isset( $_REQUEST['post_ID'] ) ) {
+        $post_id = empty( $_REQUEST['post_ID'] ) ? $_REQUEST['post'] : $_REQUEST['post_ID'];
+    }
+    if ( "post.php" == $hook ) {
+        $post_format = get_post_format($post_id);
+        wp_enqueue_script( "admin-js", get_theme_file_uri( "/assets/js/admin.js" ), array( "jquery" ), VERSION, true );
+        wp_localize_script("admin-js","romereo_pf",array("format"=>$post_format));
+    }
+}
+add_action( "admin_enqueue_scripts", "romereo_admin_assets");
+```
+
 ### ১৭.৪ - CMB2 ইমেজ ফিল্ড নিয়ে বিস্তারিত
 
 এই পর্বে সিএমবি২ এর file uploader কন্ট্রোল নিয়ে আলোচনা করা হয়েছে। উদাহরণে মূলত ইমেজ আপলোড করা ও ইমেজকে ওয়েবসাইটে দেখানো হয়েছে।

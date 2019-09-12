@@ -1,1 +1,1 @@
-# meta-framework
+# WordPress Class
